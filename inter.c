@@ -1,56 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   inter.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avan-ni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 16:38:38 by avan-ni           #+#    #+#             */
-/*   Updated: 2018/04/25 17:36:08 by avan-ni          ###   ########.fr       */
+/*   Created: 2018/04/25 18:28:21 by avan-ni           #+#    #+#             */
+/*   Updated: 2018/04/25 18:59:02 by avan-ni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <unistd.h>
 
-int is_digit(char c)
+int check_double(char *s1, int i)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return(0);
-}
+	int index;
 
-int	ft_atoi(const char *str)
-{
-	int i;
-	int sign;
-	int sum;
-
-	sign = 1;
-	i = 0;
-	sum = 0;
-	
-	while (str[i] < '0' || str[i] > '9')
-		i++;
-
-	if (str[i - 1] == '-')
-		sign = -1;
-	
-	while (is_digit(str[i]))
+	index = 0;
+	while (index < i)
 	{
-		sum = (sum * 10) + (str[i] - '0');
-		i++;
+		if (s1[index] == s1[i])
+			return(0);
+		index++;
 	}
-	return(sum*sign);
+	return (1);
 }
-
 
 int main(int argc, char **argv)
 {
-	
-	if (argc == 2)
+	int i1;
+	int i2;
+
+	i1 = 0;
+	i2 = 0;
+
+	if (argc == 3)
 	{
-		printf("%d\n", ft_atoi(argv[1]));
+		while (argv[1][i1] != '\0')
+		{
+			while (argv[2][i2] != '\0')
+			{
+				if ((argv[1][i1] == argv[2][i2]) && check_double(argv[1], i1))
+				{
+					write(1, &argv[1][i1], 1);
+					break;
+				}
+				i2++;
+			}
+			i2 = 0;
+			i1++;
+		}
 	}
+	write(1, "\n", 1);
 	return (0);
 }
